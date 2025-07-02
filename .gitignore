@@ -1,1 +1,66 @@
+# Byte-compiled / optimized / DLL files
+__pycache__/
+*.py[cod]
+*$py.class
+
+# Django stuff
+*.log
+*.pot
+*.pyc
+db.sqlite3
+db.sqlite3-journal
+
+# Virtual environment
+thisve/
+thisVE/
+.env/
+venv/
+env/
+.venv/
+ENV/
+env.bak/
+venv.bak/
+
+# IDE & Editor files
+.idea/
+.vscode/
+*.swp
+*.swo
+*.sublime-workspace
+*.sublime-project
+
+# Static & Media files (if collected)
+staticfiles/
+media/
+*.css.map
+
+# macOS files
+.DS_Store
+
+# Node.js / Frontend (if applicable)
+node_modules/
+npm-debug.log*
+
+# Coverage and testing
+.coverage
+htmlcov/
+.pytest_cache/
+
+# Secrets & Environment variables
 .env
+*.env
+.env.local
+.env.dev
+.env.prod
+secrets.json
+
+# Database backups
+*.dump
+*.backup
+
+# Celery
+celerybeat-schedule
+celerybeat.pid
+
+# Jupyter Notebook
+.ipynb_checkpoints/

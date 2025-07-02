@@ -1,0 +1,88 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>My TO-DO List</title>
+    <link rel="stylesheet" href="{% static 'css/base.css' %}">
+</head>
+
+<body>
+    <div class="container">
+        {% if user.is_authenticated %}
+        <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 18px;">
+            <div>
+                <h1 style="margin: 0; color: #4f46e5;">My Todo List</h1>
+                <span style="color: #64748b; font-size: 1.1rem;">Welcome, <strong>{{ user.username }}</strong></span>
+            </div>
+            <div style="display: flex; gap: 10px;">
+                <a href="{% url 'task:change_password' %}" style="
+                    background: #6366f1;
+                    color: #fff;
+                    border: none;
+                    border-radius: 8px;
+                    padding: 8px 16px;
+                    font-size: 0.98rem;
+                    font-weight: 600;
+                    text-decoration: none;
+                    display: inline-block;
+                    box-shadow: 0 2px 8px rgba(99,102,241,0.08);
+                    transition: background 0.2s, box-shadow 0.2s;
+                " onmouseover="this.style.background='#4f46e5';this.style.boxShadow='0 4px 16px rgba(79,70,229,0.13)';"
+                    onmouseout="this.style.background='#6366f1';this.style.boxShadow='0 2px 8px rgba(99,102,241,0.08)';">Change
+                    Password</a>
+                <form method="post" action="{% url 'task:logout' %}" style="margin: 0;">
+                    {% csrf_token %}
+                    <button type="submit" style="
+                        background: #ef4444;
+                        color: #fff;
+                        border: none;
+                        border-radius: 8px;
+                        padding: 8px 16px;
+                        font-size: 0.98rem;
+                        font-weight: 600;
+                        cursor: pointer;
+                        box-shadow: 0 2px 8px rgba(239,68,68,0.08);
+                        transition: background 0.2s, box-shadow 0.2s;
+                    " onmouseover="this.style.background='#dc2626';this.style.boxShadow='0 4px 16px rgba(220,38,38,0.13)';"
+                        onmouseout="this.style.background='#ef4444';this.style.boxShadow='0 2px 8px rgba(239,68,68,0.08)';">Logout</button>
+                </form>
+            </div>
+        </div>
+        {% endif %}
+        <div style="margin: 24px 0; display: flex; justify-content: flex-end;">
+            <form class="todo-form" method="post" style="width:100%; max-width: 100%;">
+                {% csrf_token %}
+                <input type="text" name="title" placeholder="Add a new task..." required>
+                <button type="submit">Add</button>
+            </form>
+        </div>
+        <ul class="todo-list">
+            {% for task in task %}
+            <li class="{% if task.complete %}complete{% endif %}">
+                <span style="flex:1; word-break:break-word;">{{ task.title }}</span>
+                <div class="actions" style="display:flex; align-items:center;">
+                    <form style="display:inline;" action="{% url 'task:toggle' task.id%}" method="POST">
+                        {% csrf_token %}
+                        <button title="Mark as done"
+                            style="color: {% if task.completed %}#22c55e{% else %}#6366f1{% endif %}; font-size:1.2rem; background:transparent;">&#10003;</button>
+                    </form>
+                    <form style="display:inline;" action="{% url 'task:delete' task.id%}" method="POST">
+                        {% csrf_token %}
+                        <button title="Delete"
+                            style="color:#ef4444; font-size:1.2rem; background:transparent;">&#10005;</button>
+                    </form>
+                </div>
+            </li>
+            {% empty %}
+            <li style="text-align:center; color:#a1a1aa;">
+                No task yet. Add one!
+            </li>
+            {% endfor %}
+        </ul>
+    </div>
+</body>
+
+</html>
