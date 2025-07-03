@@ -1,0 +1,15 @@
+<p> this is home page </p>
+
+{% for blog in blogs %}
+<div>
+    <h2>{{ blog.title }}</h2>
+    <p>{{ blog.content }}</p>
+    {% if blog.image %}
+    <img src="{{ blog.image.url }}" alt="{{ blog.title }}" style="max-width:300px;">
+    {% endif %}
+    <p>Published: {{ blog.created_at }}</p>
+</div>
+<hr>
+{% empty %}
+<p>No blog posts available.</p>
+{% endfor %}
