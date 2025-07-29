@@ -1,0 +1,24 @@
+{% extends 'jobs/base.html' %}
+
+{% block title %}Login - Job Portal{% endblock %}
+
+{% block header %}
+<h2 class="text-2xl font-bold text-center text-gray-800 mb-6">Welcome to Job Portal Login</h2>
+{% endblock %}
+
+{% block content %}
+<div class="max-w-md mx-auto mt-10 bg-white p-8 rounded shadow">
+  <h2 class="text-2xl font-bold text-center text-gray-800 mb-6">Login</h2>
+
+  <form method="post" class="space-y-5">
+    {% csrf_token %}
+    {{ form.as_p}}
+    <button type="submit" class="w-full bg-green-700 hover:bg-green-800 text-white py-2 px-4 rounded font-semibold">
+      Login
+    </button>
+  </form>
+</div>
+<div class="text-center mt-4">
+  <p class="text-gray-600">Don't have an account? <a href="{% url 'register' %}" class="text-green-700 hover:underline">Register</a></p>
+</div>
+{% endblock %}

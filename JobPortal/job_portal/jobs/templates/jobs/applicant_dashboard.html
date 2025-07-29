@@ -1,0 +1,44 @@
+{% extends 'jobs/base.html' %}
+{% block title %}Applicant Dashboard - Job Portal{% endblock %}
+
+{% block navbar %}
+{% include 'jobs/navbar1.html' with username=profile.user role=profile.role %}
+{% endblock %}
+
+{% block content %}
+<!-- Applicant Dashboard -->
+<div class="space-y-4">
+    {% if query %}
+    <h2 class="text-2xl mt-2 ml-2 font-bold text-black-700">Search Results</h2>
+    {% if searched_job %}
+    <ul class="space-y-4">
+        {% for job in searched_job %}
+        <li class="bg-white shadow-md rounded-lg p-4 border border-gray-200">
+            <p class="font-semibold">{{ job.title }}</p>
+            <p class="mb-6">{{ job.company_name }} - {{ job.location }}</p>
+            <p class="mb-6">{{ job.description }}</p>
+            <p class="mb-6">Posted on: {{ job.created_at }}</p>
+            <p class="mb-6">Salary: {{ job.salary }} per month</p>
+            <a href="{% url 'apply_for_job' job.id %}" class="bg-green-500 text-white px-3 py-1 rounded mt-2">Apply</a>
+        </li>
+        {% endfor %}
+    </ul>
+    {% else %}
+    <p class="text-gray-600">No jobs found.</p>
+    {% endif %}
+    {% endif %}
+</div>
+<div id="applicant" class="space-y-4">
+    <h2 class="text-2xl mt-4 ml-4 font-bold text-green-700">Available Jobs</h2>
+    {% for job in jobs %}
+    <div class="bg-white p-4 rounded shadow m-4">
+        <p class="font-semibold">{{ job.title }}</p>
+        <p class="mb-6">{{ job.company_name }} - {{ job.location }}</p>
+        <p class="mb-6">{{ job.description }}</p>
+        <p class="mb-6">Posted on: {{ job.created_at }}</p>
+        <p class="mb-6">Salary: {{ job.salary }} per month</p>
+        <a href="{% url 'apply_for_job' job.id %}" class="bg-green-500 text-white px-3 py-1 rounded mt-2">Apply</a>
+    </div>
+    {% endfor %}
+</div>
+{% endblock %}

@@ -1,0 +1,25 @@
+{% extends 'jobs/base.html' %}
+{% block title %}Previous Jobs - Job Portal{% endblock %}
+
+{% block navbar %}
+{% include 'jobs/navbar1.html' with username=profile.user role=profile.role %}
+{% endblock %}
+
+{% block content %}
+<div class="mt-6">
+    <h3 class="text-2xl font-semibold mb-4">Previous Jobs</h3>
+    {% if jobs %}
+    <ul class="space-y-4">
+        {% for job in jobs %}
+        <li class="bg-white shadow-md rounded-lg p-4 border border-gray-200">
+            <h4 class="text-lg font-medium text-gray-800">{{ job.title }}</h4>
+            <p class="text-sm text-gray-600">Posted on: {{ job.created_at }}</p>
+            <p class="text-sm text-gray-600">Status: <span class="font-semibold text-gray-700">Inactive</span></p>
+        </li>
+        {% endfor %}
+    </ul>
+    {% else %}
+    <p class="text-gray-600">No previous jobs found.</p>
+    {% endif %}
+</div>
+{% endblock %}

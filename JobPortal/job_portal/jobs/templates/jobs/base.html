@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>{% block title %}Job Portal{% endblock %}</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+</head>
+
+<body class="min-h-screen flex flex-col bg-gray-100">
+    {% block navbar %}
+    {% endblock %}
+
+    {% block header %}
+    {% endblock %}
+    <hr>
+
+    {% block content %}
+    {% endblock %}
+
+    <footer class="bg-green-800 text-white text-center py-4 w-full mt-auto">
+        &copy; 2025 Job Portal by zihadi. All rights reserved.
+    </footer>
+
+</body>
+</html>
