@@ -1,0 +1,88 @@
+{% load static %}
+<!-- Navbar -->
+<nav class="bg-green-800">
+    <div class="mx-auto max-w-7xl px-2 sm:px-6 lg:px-8">
+        <div class="relative flex h-16 items-center justify-between">
+            <!-- Logo + Links -->
+            <div class="flex flex-1 items-center justify-center sm:items-stretch sm:justify-start">
+                <div class="flex shrink-0 items-center">
+                    <img class="h-8 w-auto"
+                        src="https://tailwindcss.com/plus-assets/img/logos/mark.svg?color=indigo&shade=500" alt="">
+                </div>
+                <!-- Links -->
+                <div class="hidden sm:ml-6 sm:flex sm:space-x-4">
+                    {% if role == 'employer' %}
+                    <a href="{% url 'post_job' %}"
+                        class="bg-green-600 text-white rounded-md px-3 py-2 text-sm font-medium">+
+                        New Job</a>
+                    <a href="{% url 'employer_dashboard' %}"
+                        class="text-gray-300 hover:bg-green-600 hover:text-white rounded-md px-3 py-2 text-sm font-medium">Dashboard</a>
+                    <a href="#"
+                        class="text-gray-300 hover:bg-green-600 hover:text-white rounded-md px-3 py-2 text-sm font-medium">Previous
+                        Posts</a>
+                    <a href="#"
+                        class="text-gray-300 hover:bg-green-600 hover:text-white rounded-md px-3 py-2 text-sm font-medium">Applicants</a>
+                    {% else %}
+                    <a href="{% url 'applicant_dashboard' %}"
+                        class="text-gray-300 hover:bg-green-600 hover:text-white rounded-md px-3 py-2 text-sm font-medium">Dashboard</a>
+                    <a href="{% url 'my_applications' %}"
+                        class="text-gray-300 hover:bg-green-600 hover:text-white rounded-md px-3 py-2 text-sm font-medium">Application
+                        Status</a>
+                    {% endif %}
+                </div>
+                <!-- Search Bar -->
+                <div class="hidden sm:block sm:ml-6">
+                    <div class="relative mt-1">
+                        <form method="get" action="{% if role == 'employer' %}{% url 'employer_job_search' %}{% else %}{% url 'applicant_job_search' %}{% endif %}">
+                            <input type="text" name="q" placeholder="Search..."
+                                class="block w-full rounded-md border border-gray-600 bg-white-700 text-black placeholder-gray-400 px-3 py-1.5 text-sm focus:border-white focus:ring-white focus:outline-none"
+                                value="{{ request.GET.q|default:'' }}">
+                            <button type="submit"
+                                class="absolute inset-y-0 right-0 flex items-center pr-3 text-gray-400 hover:text-white focus:outline-none focus:ring-2 focus:ring-white focus:ring-offset-2 focus:ring-offset-gray-800">
+                                <span class="sr-only">Search</span>
+                                <svg class="h-5 w-5" fill="none" stroke="currentColor" stroke-width="1.5"
+                                    viewBox="0 0 24 24" stroke-linecap="round" stroke-linejoin="round">
+                                    <path d="M21 21l-6-6m2-5a7 7 0 1 1-14 0 7 7 0 0 1 14 0z" />
+                                </svg>
+                            </button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+            <!-- Right menu -->
+            <div class="absolute inset-y-0 right-0 flex items-center pr-2 sm:static sm:inset-auto sm:ml-6 sm:pr-0">
+                <!-- Notifications -->
+                <button type="button"
+                    class="rounded-full bg-green-800 p-1 text-gray-400 hover:text-white focus:outline-none focus:ring-2 focus:ring-white focus:ring-offset-2 focus:ring-offset-gray-800">
+                    <span class="sr-only">View notifications</span>
+                    <svg class="h-6 w-6" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24"
+                        stroke-linecap="round" stroke-linejoin="round">
+                        <path
+                            d="M14.857 17.082a23.848 23.848 0 0 0 5.454-1.31A8.967 8.967 0 0 1 18 9.75V9A6 6 0 0 0 6 9v.75a8.967 8.967 0 0 1-2.312 6.022c1.733.64 3.56 1.085 5.455 1.31m5.714 0a3 3 0 1 1-5.714 0" />
+                    </svg>
+                </button>
+                <!-- profile name -->
+                <span class="hidden sm:block text-gray-300 px-3 py-2 text-sm font-medium">Welcome,</span>
+                <span class="hidden sm:block text-white">{{ username }}</span>
+                <!-- Profile dropdown -->
+                <div class="relative ml-4">
+                    <button type="button"
+                        class="flex rounded-full bg-gray-800 text-sm focus:outline-none focus:ring-2 focus:ring-white focus:ring-offset-2 focus:ring-offset-gray-800"
+                        id="user-menu-button" aria-expanded="false"
+                        onmouseover="document.getElementById('user-dropdown').classList.toggle('hidden')">
+                        <span class="sr-only">Open user menu</span>
+                        <img class="h-8 w-8 rounded-full" src="{% static 'images/image.png' %}" alt="">
+                    </button>
+                </div>
+                <!-- logout button -->
+                <div class="relative ml-4">
+                    <form action="{% url 'logout' %}" method="post">
+                        {% csrf_token %}
+                        <button type="submit"
+                            class="bg-green-600 text-white rounded-md px-3 py-2 text-sm font-medium">Logout</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</nav>

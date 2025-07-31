@@ -1,0 +1,54 @@
+{% extends 'jobs/base.html' %}
+{% block title %}Employer Dashboard - Job Portal{% endblock %}
+
+{% block navbar %}
+{% include 'jobs/navbar1.html' with username=profile.user role=profile.role %}
+{% endblock %}
+
+{% block content %}
+<!-- Employer Dashboard -->
+<div id="employer" class="space-y-4">
+    <div class="searched_job bg-white p-4 rounded shadow">
+        {% if query %}
+        <h2 class="text-2xl mt-2 ml-2 font-bold text-black-700">Search Results</h2>
+        {% if searched_job %}
+        <ul class="space-y-4">
+            {% for job in searched_job %}
+            <li class="bg-white shadow-md rounded-lg p-4 border border-gray-200">
+                <p class="font-semibold">{{ job.title }}</p>
+                <p class="mb-6">{{ job.company_name }} - {{ job.location }}</p>
+                <p class="mb-6">{{ job.description }}</p>
+                <p class="mb-6">Posted on: {{ job.created_at }}</p>
+                <p class="mb-6">Salary: {{ job.salary }} per month</p>
+                <a href="#"
+                    class="tab-btn bg-blue-500 text-white px-4 py-2 rounded text-sm text-blue-500">Edit</a>
+                <a href="{% url 'view_applicants' job.id %}"
+                    class="tab-btn bg-yellow-500 text-white px-4 py-2 rounded text-sm">View Applicants</a>
+                <a href="#"
+                    class="tab-btn bg-red-500 text-white px-4 py-2 ml-6 rounded text-sm">Delete</a>
+            </li>
+            {% endfor %}
+        </ul>
+        {% else %}
+        <p class="text-gray-600">No jobs found.</p>
+        {% endif %}
+        {% endif %}
+    </div>
+    <h2 class="text-2xl mt-4 ml-4 font-bold text-blue-700">Your Job Posts</h2>
+    {% for job in jobs %}
+    <div class="bg-white p-4 rounded shadow">
+        <p class="font-semibold">{{ job.title }}</p>
+        <p class="mb-6">{{ job.company_name }} - {{ job.location }}</p>
+        <p class="mb-6">{{ job.description }}</p>
+        <p class="mb-6">Posted on: {{ job.created_at }}</p>
+        <p class="mb-6">Salary: {{ job.salary }} per month</p>
+        <a href="#"
+            class="tab-btn bg-blue-500 text-white px-4 py-2 rounded text-sm text-blue-500">Edit</a>
+        <a href="{% url 'view_applicants' job.id %}"
+            class="tab-btn bg-yellow-500 text-white px-4 py-2 rounded text-sm">View Applicants</a>
+        <a href="#"
+            class="tab-btn bg-red-500 text-white px-4 py-2 ml-6 rounded text-sm">Delete</a>
+    </div>
+    {% endfor %}
+</div>
+{% endblock %}

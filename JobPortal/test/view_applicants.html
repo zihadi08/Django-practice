@@ -1,0 +1,71 @@
+{% extends 'jobs/base.html' %}
+{% block title %}Applicants - Job Portal{% endblock %}
+
+{% block navbar %}
+{% include 'jobs/navbar1.html' with username=profile.user role=profile.role %}
+{% endblock %}
+
+{% block content %}
+<div class="mt-6">
+    {% if messages %}
+    <div class="m-auto space-y-2 z-50">
+        {% for message in messages %}
+        <div class="rounded px-4 py-2 shadow-lg
+          {% if message.tags == 'success' %}
+            bg-green-500 text-white
+          {% elif message.tags == 'error' %}
+            bg-red-500 text-white
+          {% elif message.tags == 'warning' %}
+            bg-yellow-400 text-black
+          {% else %}
+            bg-gray-300 text-black
+          {% endif %}
+      ">
+            {{ message }}
+        </div>
+        {% endfor %}
+    </div>
+    {% endif %}
+    <h3 class="text-2xl font-semibold mb-4">Applications Received</h3>
+    {% if applications %}
+    {% for application in applications %}
+    <div class="bg-white shadow-md rounded-lg p-4 mb-4 border border-gray-200">
+        <div class="flex justify-between items-start">
+            <div>
+                <p class="text-sm text-gray-600">Applied for: <span class="font-semibold text-gray-700" ><a>
+                    {{ application.job.title }}
+                </a></span></p>
+                <p class="text-sm text-gray-600">Name: {{ application.applicant.user.username }}</p>
+                <p class="text-sm text-gray-600">Email: <a href="{{ application.applicant.user.email }}"
+                        class="text-blue-600 hover:underline">{{ application.applicant.user.email }}</a></p>
+                <p class="text-sm text-gray-600">Date: {{ application.applied_at }}</p>
+            </div>
+            <div>
+                <a href="{{ application.resume.url }}"
+                    class="inline-block px-4 py-2 bg-green-600 text-white rounded hover:bg-green-700 text-sm">View
+                    Resume</a>
+                <form action="{% url 'status' application.id %}" method="post" class="inline-block">
+                    {% csrf_token %}
+                    <button type="submit" name="status" value="Accepted"
+                        class="px-4 py-2 bg-blue-600 text-white rounded hover:bg-blue-700 text-sm">Accept</button>
+                    <button type="submit" name="status" value="Rejected"
+                        class="px-4 py-2 bg-red-600 text-white rounded hover:bg-red-700 text-sm">Reject</button>
+                </form>
+                <div>
+                    <div class=" ml-8 pl-40 py-4 space-x-2">
+                        {% if application.status %}
+                        <span class="bg-blue-100 text-blue-800 text-xs font-medium px-3 py-1 rounded-full">
+                            {{ application.status }}
+                        </span>
+                        {% endif %}
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    {% endfor %}
+    {% else %}
+    <p class="text-gray-600">No applications received yet.</p>
+    {% endif %}
+</div>
+{% endblock %}
